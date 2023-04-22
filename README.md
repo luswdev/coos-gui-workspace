@@ -1,6 +1,20 @@
-# STM32-Workspace
+# CoOS GUI Engine Workspace
 
-A template for stm32 toolchain cmake workspace.
+CoOS GUI Engine for STM32 Workspace
+
+## Clone
+
+Need to clone GUI engine code together, you can clone in same time with submodule
+
+```bash
+git clone --recurse-submodules git@github.com:luswdev/coos-gui-workspace.git
+```
+
+or
+
+```bash
+git clone --recurse-submodules https://github.com/luswdev/coos-gui-workspace.git
+```
 
 ## Docker Usage
 
@@ -24,10 +38,17 @@ When in container, start build target with command:
 ./build.sh
 ```
 
-The default output target name will be `stm32-framework.elf` and `stm32-framework.bin`.
-If you want to change it, just replace the project name in `CMakeLists.txt`.
+Or it can simply done with docker execute command (run outside container):
 
-```diff
--project(stm32-framework)
-+project(awesome-project)
+```bash
+./docker/run.sh ./build.sh
 ```
+
+## Run and Test
+
+Flash `coos-gui.bin` into STM32 MCU to run program, there is a sample of [OpenOCD](https://openocd.org/)
+
+1. Install OpenOCD
+2. Plug in stlink into your PC and attach MCU with stlink
+3. Execute download.sh and wait the download progress done
+4. All done!
