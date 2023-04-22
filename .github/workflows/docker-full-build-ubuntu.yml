@@ -17,7 +17,9 @@ jobs:
           submodules: recursive
 
       - name: Build the Docker Image
-        run: docker build --network=host -t stm32-workspace . -f docker/toolchain.dockerfile
+        run: export ACTIONS_CACHE_URL=$(echo "$ACTIONS_ID_TOKEN_REQUEST_URL" | grep -Po 'https://[^/]+/[^/]+/' | sed  's/pipelines/artifactcache/') \
+             export ACTIONS_RUNTIME_TOKEN=$ACTIONS_ID_TOKEN_REQUEST_TOKEN \
+             docker buildx build --load -t stm32-workspace . -f docker/toolchain.dockerfile --cache-to "type=gha,mode=max" --cache-from type=gha
 
       - name: Test Build STM32 Flash Image
         run: docker run -v $(pwd):/opt/project -i --rm --hostname stm32-workspace --workdir /opt/project stm32-workspace:latest ./build.sh
