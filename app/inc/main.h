@@ -1,41 +1,38 @@
 /**
-  ******************************************************************************
-  * @file    Template/main.h 
-  * @author  MCD Application Team
-  * @version V1.0.0
-  * @date    20-September-2013
-  * @brief   Header for main.c module
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
-  *
-  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-  * You may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at:
-  *
-  *        http://www.st.com/software_license_agreement_liberty_v2
-  *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  *
-  ******************************************************************************
-  */
-  
-/* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __MAIN_H
-#define __MAIN_H
+ *******************************************************************************
+ * @file       main.h
+ * @version    V0.0.1
+ * @date       2020.01.19
+ * @brief      Main define file.
+ *******************************************************************************
+ */ 
 
-/* Includes ------------------------------------------------------------------*/
+#ifndef __MAIN_H__
+#define __MAIN_H__
 
-/* Exported types ------------------------------------------------------------*/
-/* Exported constants --------------------------------------------------------*/
-/* Exported macro ------------------------------------------------------------*/
-/* Exported functions ------------------------------------------------------- */
+#define TASK_STK_SIZE			256
 
-#endif /* __MAIN_H */
+#define USE_FULL_ASSERT
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+#define USE_COOS
+#ifdef USE_COOS
+ #define USE_GUI
+#endif
+
+#define USE_USB
+#ifdef USE_USB
+ #define USE_MOUSE
+ #define USE_KBD
+#endif
+
+#ifdef USE_USB
+ extern USB_OTG_CORE_HANDLE      USB_OTG_Core;
+ extern USBH_HOST                USB_Host;
+#endif
+
+#ifndef USE_COOS
+ void TimingDelay_Decrement(void);
+ void Delay(__IO uint32_t nTime);
+#endif
+
+#endif /* __MAIN_H__ */

@@ -16,24 +16,36 @@ set(CMAKE_CXX_FLAGS ${CMAKE_C_FLAGS})
 set(CMAKE_ASM_FLAGS ${CMAKE_C_FLAGS})
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -T ${CMAKE_CURRENT_LIST_DIR}/drivers/linker/STM32F429ZI_FLASH.ld")
 
-project(stm32-framework
+project(coos-gui
     LANGUAGES C ASM)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/app/src app)
+aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/coos/src coos)
+aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/gui-engine/src gui)
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/drivers/cmsis/src cmsis)
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/drivers/stm32f4xx/src stm32f4xx)
+aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/drivers/usb-hid/src usb)
+aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/drivers/stm32f429-discovery/src discovery)
 
 include_directories(
     ${CMAKE_CURRENT_LIST_DIR}/app/inc
+    ${CMAKE_CURRENT_LIST_DIR}/coos/inc
+    ${CMAKE_CURRENT_LIST_DIR}/gui-engine/inc
     ${CMAKE_CURRENT_LIST_DIR}/drivers/cmsis/inc
     ${CMAKE_CURRENT_LIST_DIR}/drivers/stm32f4xx/inc
+    ${CMAKE_CURRENT_LIST_DIR}/drivers/usb-hid/inc
+    ${CMAKE_CURRENT_LIST_DIR}/drivers/stm32f429-discovery/inc
 )
 
 add_executable(
     ${PROJECT_NAME}.elf
     ${app}
+    ${coos}
+    ${gui}
     ${cmsis}
     ${stm32f4xx}
+    ${usb}
+    ${discovery}
     ${CMAKE_CURRENT_LIST_DIR}/drivers/startup/startup_stm32f429_439xx.s
 )
 
